@@ -4,6 +4,6 @@ import asyncHandler from 'express-async-handler'
 
 const router = Router();
 
-router.route('/user/auth').post(asyncHandler(getUsers));
+router.route('/user/auth').post(asyncHandler(authUser));
 
 export default router;

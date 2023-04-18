@@ -3,10 +3,12 @@
 // @access Public
 
 import prisma from "../prisma.js"
+import jwt from 'jsonwebtoken'
 
 // @param {login, password}
 export const authUser = async (req, res) => {
-    res.json("You are logged in! Cool!")
+    const token = jwt.sign('Pit', process.env.ACCESS_TOKEN)
+    res.json(`TOKEN: ${token} | name: PIT | hash: ${process.env.ACCESS_TOKEN}`)
 }
 
 export const getUsers = async (req, res) => {
