@@ -5,6 +5,7 @@ import morgan from 'morgan';
 
 import authUserRouter from './app/auth/auth.routes.js'
 import prisma from './app/prisma.js'
+import { errorHandler, notFound } from './app/middlewares/error.middleware.js';
 
 dotenv.config()
 
@@ -15,8 +16,14 @@ async function start() {
     if (process.env.MODE === 'dev') {
         app.use(morgan('dev'));
     }
+
+    app.use(express.json());
+
     app.use(authUserRouter);
-        
+
+    app.use(notFound);
+    app.use(errorHandler);
+
     app.listen(PORT, () => {
         if (process.env.MODE === 'dev') {
             console.log(`🧑‍💻 Started in DEV MODE`);
@@ -27,7 +34,7 @@ async function start() {
 }
 
 start()
-    .then(async() => {
+    .then(async () => {
         await prisma.$disconnect();
     })
     .catch(async e => {

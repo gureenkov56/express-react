@@ -1,9 +1,15 @@
 import { Router } from 'express';
-import { authUser, getUsers } from './auth.controller.js';
+import { authUser, getUsers, loginUser, regUser } from './auth.controller.js';
 import asyncHandler from 'express-async-handler'
 
 const router = Router();
+// get users list
+router.route('/users').get(asyncHandler(getUsers));
 
-router.route('/user/auth').post(asyncHandler(authUser));
+// login user
+router.route('/user/login').post(asyncHandler(loginUser));
+
+// reg new user
+router.route('/user/reg').post(asyncHandler(regUser))
 
 export default router;
