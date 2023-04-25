@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { authUser, getUsers, loginUser, regUser } from './auth.controller.js';
+import { getUsers, loginUser, regUser } from './auth.controller.js';
 import asyncHandler from 'express-async-handler'
 
 const router = Router();

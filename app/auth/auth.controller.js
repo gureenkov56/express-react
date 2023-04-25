@@ -39,7 +39,7 @@ export const regUser = async (req, res) => {
         }
     })
 
-    const token = jwt.sign(user.email, process.env.ACCESS_TOKEN);
+    const token = jwt.sign(user.id, process.env.SECRET_JWT_HASH);
     res.json({ token });
 }
 
@@ -64,10 +64,10 @@ export const loginUser = async (req, res) => {
     const checkPassword = await argon2.verify(candidate.password, password);
 
     if (checkPassword) {
-        const token = jwt.sign(email, process.env.ACCESS_TOKEN)
+        const token = jwt.sign(candidate.id, process.env.SECRET_JWT_HASH)
         res.status(200).json({token});
     } else {
-        res.status(403)
+        res.status(401)
         throw new Error('Password is wrong');
     }
 }

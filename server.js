@@ -4,8 +4,10 @@ import express from "express";
 import morgan from 'morgan';
 
 import authUserRouter from './app/auth/auth.routes.js'
+import userRoutes from './app/user/user.routes.js'
 import prisma from './app/prisma.js'
 import { errorHandler, notFound } from './app/middlewares/error.middleware.js';
+import { protect } from './app/middlewares/auth.middleware.js';
 
 dotenv.config()
 
@@ -20,6 +22,7 @@ async function start() {
     app.use(express.json());
 
     app.use(authUserRouter);
+    app.use('/api', protect, userRoutes)
 
     app.use(notFound);
     app.use(errorHandler);
