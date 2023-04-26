@@ -20,3 +20,23 @@ model User {
   password String
   images   String[] @default([])
 }
+
+model Category {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  name  String
+  posts Post[]
+}
+
+model Post {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  title      String
+  content    String
+  category   Category @relation(fields: [categoryId], references: [id])
+  categoryId Int
+}
